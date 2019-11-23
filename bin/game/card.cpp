@@ -3,9 +3,9 @@
 using namespace Graph_lib;
 
 Card::Card(int x, int y, std::string img_name, Graph_lib::Callback cb_show)
-    : img{Point{x * (cr_sz_x + shft), y * (cr_sz_y + shft)}, img_name},
-      show{Point{x * (cr_sz_x + shft), y * (cr_sz_y + shft)}, cr_sz_x, cr_sz_y, "", cb_show},
-      Rectangle{Point{x * (cr_sz_x + shft), y * (cr_sz_y + shft)}, cr_sz_x, cr_sz_y},
+    : img{Point{side_gap + x * (cr_sz_x + shft), up_gap + y * (cr_sz_y + shft)}, img_name},
+      show{Point{side_gap + x * (cr_sz_x + shft), up_gap + y * (cr_sz_y + shft)}, cr_sz_x, cr_sz_y, "", cb_show},
+      Rectangle{Point{side_gap + x * (cr_sz_x + shft), up_gap + y * (cr_sz_y + shft)}, cr_sz_x, cr_sz_y},
       x{x},
       y{y}
 {
@@ -15,6 +15,8 @@ Card::Card(int x, int y, std::string img_name, Graph_lib::Callback cb_show)
 void Card::click()
 {
     is_clicked = !is_clicked;
+    draw_lines();
+    std::cout << __LINE__ << std::endl;
 }
 
 void Card::attach(Graph_lib::Window &win)
@@ -26,7 +28,7 @@ void Card::draw_lines() const
 {
     if (is_clicked)
     {
-        Rectangle::draw();
+        Rectangle::draw_lines();
     }
     else
     {
