@@ -11,6 +11,8 @@ CppApplication {
     files: [
         "card.cpp",
         "card.h",
+        "field.cpp",
+        "field.h",
         "game_paths.cpp",
         "game_paths.h",
         "globals.h",
@@ -24,6 +26,10 @@ CppApplication {
         "split.h",
         "split.cpp",
         "main.cpp",
+        "pictures_treatment.h",
+        "pictures_treatment.cpp",
+        "editting_files.h",
+        "editting_files.cpp",
     ]
 
     cpp.includePaths:  fltk_dir + "\\include"
