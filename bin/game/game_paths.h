@@ -4,11 +4,9 @@
 #include "iostream"
 #include "split.h"
 
-using namespace std;
+const std::string find_path();
 
-const string find_path();
-
-const string game = find_path();
-const string source = game + "source\\";
+const std::string game = find_path();
+const std::string source = game + "source\\";
 
 #endif // GAME_PATHS_H

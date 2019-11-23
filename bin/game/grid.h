@@ -4,6 +4,10 @@
 #include "..\\..\\Graph_lib\\Graph.h"
 #include "..\\..\\Graph_lib\\Simple_window.h"
 
+#include <iostream>
+#include <string>
+#include <vector>
+
 class Grid : public Graph_lib::Lines
 {
   private:
