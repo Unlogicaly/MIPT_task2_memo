@@ -9,6 +9,8 @@ CppApplication {
     property path fltk_dir: "..\\..\\fltk"
 
     files: [
+        "game_paths.cpp",
+        "game_paths.h",
         graph_lib_dir + "\\Graph.cpp",
         graph_lib_dir + "\\GUI.cpp",
         graph_lib_dir + "\\Window.cpp",
