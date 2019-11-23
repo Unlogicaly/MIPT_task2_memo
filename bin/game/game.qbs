@@ -16,6 +16,8 @@ CppApplication {
         "grid.cpp",
         "create_window.h",
         "create_window.cpp",
+        "split.h",
+        "split.cpp",
         "main.cpp",
     ]
 
