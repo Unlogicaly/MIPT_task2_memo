@@ -1,6 +1,7 @@
 #include "create_window.h"
 #include "editting_files.h"
 #include "field.h"
+#include <algorithm>
 
 template <class T>
 void print(const std::vector<T> &src, const std::string &sep = " ", const std::string &end = "\n",
@@ -15,14 +16,11 @@ void print(const std::vector<T> &src, const std::string &sep = " ", const std::s
 
 int main()
 {
+    Field f{};
 
-    //    Field f{};
-
-    //    f.wait_for_button();
+    f.wait_for_button();
 
     //    clear();
-
-    print(get_pairs());
 
     return Graph_lib::gui_main();
 }

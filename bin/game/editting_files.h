@@ -5,6 +5,8 @@
 
 void read_directory(const std::string &name, std::vector<std::string> &v);
 
+void get_names(std::vector<std::string> &names);
+
 void del(const std::string &path);
 
 bool check_file(const std::string &path);

@@ -25,12 +25,12 @@ void Card::attach(Graph_lib::Window &win)
 
 void Card::draw_lines() const
 {
-    if (!is_clicked)
+    if (is_clicked)
     {
-        Rectangle::draw_lines();
+        img.draw();
     }
     else
     {
-        img.draw();
+        Rectangle::draw_lines();
     }
 }

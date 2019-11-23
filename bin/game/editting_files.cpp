@@ -55,3 +55,11 @@ void cl(std::vector<string> &src)
             --i;
         }
 }
+
+void get_names(std::vector<std::string> &names)
+{
+    std::ifstream is(game + "source\\pictures.txt");
+    string s;
+    while (is >> s)
+        names.push_back(s);
+}
