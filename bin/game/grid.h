@@ -1,8 +1,7 @@
 #ifndef GRID_H
 #define GRID_H
 
-#include "..\\..\\Graph_lib\\Graph.h"
-#include "..\\..\\Graph_lib\\Simple_window.h"
+#include "globals.h"
 
 #include <iostream>
 #include <string>

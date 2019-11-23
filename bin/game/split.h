@@ -1,7 +1,9 @@
 #ifndef SPLIT_H
 #define SPLIT_H
 
-#include "create_window.h"
+#include "globals.h"
+#include <iostream>
+#include <vector>
 
 std::vector<std::string> split(std::string s, char c = ' ');
 

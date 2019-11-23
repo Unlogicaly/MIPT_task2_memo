@@ -2,7 +2,6 @@
 #define GAME_PATHS_H
 
 #include "split.h"
-#include <iostream>
 
 const std::string find_path();
 
