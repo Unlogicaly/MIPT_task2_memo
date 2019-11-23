@@ -16,7 +16,6 @@ void Card::click()
 {
     is_clicked = !is_clicked;
     draw_lines();
-    std::cout << __LINE__ << std::endl;
 }
 
 void Card::attach(Graph_lib::Window &win)
@@ -26,7 +25,7 @@ void Card::attach(Graph_lib::Window &win)
 
 void Card::draw_lines() const
 {
-    if (is_clicked)
+    if (!is_clicked)
     {
         Rectangle::draw_lines();
     }

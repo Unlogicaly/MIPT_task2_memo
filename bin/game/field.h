@@ -4,6 +4,8 @@
 #include "card.h"
 #include "pictures_treatment.h"
 
+std::vector<int> get_pairs();
+
 class Field : public Simple_window
 {
   private:
