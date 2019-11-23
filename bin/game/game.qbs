@@ -5,19 +5,23 @@ CppApplication {
 
     cpp.cxxLanguageVersion: "c++14"
 
-    property path graph_lib_dir: "C:/Graph_lib"
+    property path graph_lib_dir: "..\\..\\Graph_lib"
+    property path fltk_dir: "..\\..\\fltk"
 
     files: [
-        graph_lib_dir + "/Graph.cpp",
-        graph_lib_dir + "/GUI.cpp",
-        graph_lib_dir + "/Window.cpp",
+        graph_lib_dir + "\\Graph.cpp",
+        graph_lib_dir + "\\GUI.cpp",
+        graph_lib_dir + "\\Window.cpp",
         "main.cpp",
     ]
 
-    cpp.includePaths: "C:/fltk_win64/include"
-    cpp.libraryPaths: "C:/fltk_win64/lib"
+    cpp.includePaths:  fltk_dir + "\\include"
+    cpp.libraryPaths: fltk_dir + "\\lib"
+
     cpp.cxxFlags: "-Wno-unused-parameter"
+
     cpp.driverLinkerFlags: "-mwindows"
+
     cpp.staticLibraries: [
         "fltk_images",
         "fltk",
