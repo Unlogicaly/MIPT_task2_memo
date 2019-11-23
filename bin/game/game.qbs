@@ -12,6 +12,10 @@ CppApplication {
         graph_lib_dir + "\\Graph.cpp",
         graph_lib_dir + "\\GUI.cpp",
         graph_lib_dir + "\\Window.cpp",
+        "grid.h",
+        "grid.cpp",
+        "create_window.h",
+        "create_window.cpp",
         "main.cpp",
     ]
 

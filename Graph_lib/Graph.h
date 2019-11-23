@@ -1,5 +1,5 @@
 #ifndef GRAPH_GUARD
-#define GRAPH_GUARD 1
+#define GRAPH_GUARD
 
 #include <vector>
 #include <string>
