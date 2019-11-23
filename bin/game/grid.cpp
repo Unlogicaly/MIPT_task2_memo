@@ -3,7 +3,6 @@
 Grid::Grid(int x_size, int y_size, int x_tick, int y_tick, Graph_lib::Color::Color_type c,
            Graph_lib::Line_style::Line_style_type style, int width)
 {
-
     grid.set_color(c);
     grid.set_style(Graph_lib::Line_style{style, width});
 

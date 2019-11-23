@@ -58,5 +58,6 @@ Simple_window *create_window(const std::string &size, bool with_grid, const Grap
 
         win->attach(*grid);
     }
+
     return win;
 }
