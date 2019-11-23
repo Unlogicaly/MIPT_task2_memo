@@ -11,4 +11,10 @@ const int cr_sz_y = 120;
 // shift pixels per card
 const int shft = 5;
 
+const int side_gap = 150;
+const int up_gap = 100;
+
+const int height = 6;
+const int width = 6;
+
 #endif // GLOBALS_H

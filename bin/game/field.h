@@ -1,14 +1,25 @@
 #ifndef FIELD_H
 #define FIELD_H
 
-#include "editting_files.h"
+#include "card.h"
+#include "pictures_treatment.h"
 
-// class Field : public Graph_lib::Simple_Window
-//{
-// private:
+class Field : public Simple_window
+{
+  private:
+    static void cb_show(Graph_lib::Address pwin, Graph_lib::Address pwid)
+    {
+        Graph_lib::reference_to<Field>(pwid).flip(pwin);
+    }
 
-// public:
-//    Field();
-//};
+    std::vector<std::vector<Card *>> cards;
+
+  public:
+    Field();
+
+    Card *get_card(int x, int y);
+
+    void flip(Graph_lib::Address pwin);
+};
 
 #endif // FIELD_H

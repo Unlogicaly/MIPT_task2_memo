@@ -2,41 +2,34 @@
 
 using namespace Graph_lib;
 
-Card::Card(int x, int y, std::string img_name)
-    : Image{Point{x * (cr_sz_x + shft), y * (cr_sz_y + shft)}, source + img_name},
-      Button{Point{x * (cr_sz_x + shft), y * (cr_sz_y + shft)}, cr_sz_x, cr_sz_y, "", cb_show},
-      Rectangle{
-          Point{x * (cr_sz_x + shft), y * (cr_sz_y + shft)},
-          cr_sz_x,
-          cr_sz_y,
-      }
+Card::Card(int x, int y, std::string img_name, Graph_lib::Callback cb_show)
+    : img{Point{x * (cr_sz_x + shft), y * (cr_sz_y + shft)}, img_name},
+      show{Point{x * (cr_sz_x + shft), y * (cr_sz_y + shft)}, cr_sz_x, cr_sz_y, "", cb_show},
+      Rectangle{Point{x * (cr_sz_x + shft), y * (cr_sz_y + shft)}, cr_sz_x, cr_sz_y},
+      x{x},
+      y{y}
 {
-}
-
-void Card::cb_show(Address, Address addr)
-{
-    Graph_lib::reference_to<Card>(addr).click();
+    Rectangle::set_fill_color(Graph_lib::Color::dark_blue);
 }
 
 void Card::click()
 {
     is_clicked = !is_clicked;
-    Fl::redraw();
 }
 
 void Card::attach(Graph_lib::Window &win)
 {
-    Button::attach(win);
+    win.attach(show);
 }
 
 void Card::draw_lines() const
 {
     if (is_clicked)
     {
-        Rectangle::draw_lines();
+        Rectangle::draw();
     }
     else
     {
-        Image::draw_lines();
+        img.draw();
     }
 }

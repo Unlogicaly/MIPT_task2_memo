@@ -1,20 +1,15 @@
-#include "card.h"
 #include "create_window.h"
 #include "editting_files.h"
+#include "field.h"
 
 int main()
 {
-    Simple_window *win = create_window("m");
 
-    // Card my_card(2, 3);
-    // my_card.attach(*win);
+    Field f{};
 
-    win->attach(*new Graph_lib::Image({100, 100}, source + "default.gif"));
-    win->wait_for_button();
-
-    std::cout << get_pic("apple", 150);
+    f.wait_for_button();
 
     clear();
 
-    return 0;
+    return Graph_lib::gui_main();
 }
