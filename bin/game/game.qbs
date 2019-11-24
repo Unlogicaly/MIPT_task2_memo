@@ -15,7 +15,6 @@ CppApplication {
         "field.h",
         "game_paths.cpp",
         "game_paths.h",
-        "globals.h",
         "mywin.cpp",
         "mywin.h",
         graph_lib_dir + "\\Graph.cpp",

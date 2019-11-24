@@ -33,9 +33,11 @@ void wait(int time)
 
 int main()
 {
-    Field f{};
+    Field f(2, 2, 150, 5, 150, 150);
 
     f.wait_for_button();
+
+    clear();
 
     return Graph_lib::gui_main();
 }

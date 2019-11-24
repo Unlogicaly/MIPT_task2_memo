@@ -5,13 +5,13 @@
 
 Card *Field::get_card(int x, int y)
 {
-    return cards[(x - side_gap) / (cr_sz_x + shft)][(y - up_gap) / (cr_sz_y + shft)];
+    return cards[(x - side_gap) / (size + shift)][(y - up_gap) / (size + shift)];
 }
 
-std::vector<int> rand_range()
+std::vector<int> rand_range(int max)
 {
     srand(time(NULL));
-    std::vector<int> res(height * width);
+    std::vector<int> res(max);
     for (auto i = 0; i < res.size(); ++i)
     {
         res[i] = i;
@@ -21,13 +21,21 @@ std::vector<int> rand_range()
     return res;
 }
 
-Field::Field() : Simple_window({0, 0}, 1920, 1080, ""), opened{nullptr, nullptr}
+Field::Field(int height, int width, int size, int shift, int side_gap, int up_gap)
+    : Simple_window({0, 0}, 1920, 1080, ""),
+      opened{nullptr, nullptr},
+      height{height},
+      width{width},
+      size{size},
+      shift{shift},
+      side_gap{side_gap},
+      up_gap{up_gap}
 {
     std::vector<std::string> pictures;
     get_names(pictures);
     std::random_shuffle(pictures.begin(), pictures.end());
 
-    std::vector<int> pairs = rand_range();
+    std::vector<int> pairs = rand_range(height * width);
 
     for (auto i = 0; i < height; ++i)
     {
@@ -39,12 +47,12 @@ Field::Field() : Simple_window({0, 0}, 1920, 1080, ""), opened{nullptr, nullptr}
     for (auto i = 0; i < height * width; i += 2)
     {
         int i1 = pairs[i] / width, j1 = pairs[i] % width;
-        cards[i1][j1] = new Card(i1, j1, get_pic(pictures[i / 2], cr_sz_x), cb_show);
+        cards[i1][j1] = new Card(i1, j1, get_point(i1, j1), size, get_pic(pictures[i / 2], size), cb_show);
         attach(*cards[i1][j1]);
         attach(*cards[i1][j1]->show);
 
         int i2 = pairs[i + 1] / width, j2 = pairs[i + 1] % width;
-        cards[i2][j2] = new Card(i2, j2, get_pic(pictures[i / 2], cr_sz_x), cb_show);
+        cards[i2][j2] = new Card(i2, j2, get_point(i2, j2), size, get_pic(pictures[i / 2], size), cb_show);
         attach(*cards[i2][j2]);
         attach(*cards[i2][j2]->show);
     }
@@ -73,8 +81,8 @@ void Field::flip(Graph_lib::Address pwin)
             ready++;
             if (ready == height * width / 2)
             {
-                std::cout << "Congratulations!";
                 hide();
+                std::cout << "Congratulations!";
             }
         }
         else

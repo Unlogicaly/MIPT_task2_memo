@@ -6,7 +6,7 @@
 
 std::vector<int> get_pairs();
 
-std::vector<int> rand_range();
+std::vector<int> rand_range(int max);
 
 class Field : public Simple_window
 {
@@ -22,8 +22,12 @@ class Field : public Simple_window
 
     int ready = 0;
 
+    int height, width, size, shift, side_gap, up_gap;
+
+    point get_point(int x, int y) { return {side_gap + (size + shift) * x, up_gap + (size + shift) * y}; }
+
   public:
-    Field();
+    Field(int height, int width, int size, int shift, int side_gap, int up_gap);
 
     Card *get_card(int x, int y);
 

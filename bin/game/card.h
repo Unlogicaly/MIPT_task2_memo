@@ -1,7 +1,9 @@
 #ifndef CARD_H
 #define CARD_H
 
-#include "myWin.h"
+#include "mywin.h"
+
+#define point std::pair<int, int>
 
 class Card : public Graph_lib::Rectangle
 {
@@ -14,12 +16,14 @@ class Card : public Graph_lib::Rectangle
 
     bool is_clicked = false;
 
+    int size;
+
     std::string name;
 
   public:
     Graph_lib::Button *show;
 
-    Card(int x, int y, std::string img_name, Graph_lib::Callback cb_show);
+    Card(int x, int y, point p, int size, std::string img_name, Graph_lib::Callback cb_show);
 
     void click();
 

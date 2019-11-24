@@ -2,13 +2,13 @@
 
 using namespace Graph_lib;
 
-Card::Card(int x, int y, std::string img_name, Graph_lib::Callback cb_show)
-    : img{Point{side_gap + x * (cr_sz_x + shft), up_gap + y * (cr_sz_y + shft)}, img_name},
-      show{new Graph_lib::Button(Point{side_gap + x * (cr_sz_x + shft), up_gap + y * (cr_sz_y + shft)}, cr_sz_x,
-                                 cr_sz_y, "", cb_show)},
-      Rectangle{Point{side_gap + x * (cr_sz_x + shft), up_gap + y * (cr_sz_y + shft)}, cr_sz_x, cr_sz_y},
+Card::Card(int x, int y, point p, int size, std::string img_name, Graph_lib::Callback cb_show)
+    : img{Point{p.first, p.second}, img_name},
+      show{new Graph_lib::Button(Point{p.first, p.second}, size, size, "", cb_show)},
+      Rectangle{Point{p.first, p.second}, size, size},
       x{x},
       y{y},
+      size{size},
       name{img_name}
 {
     Rectangle::set_fill_color(Graph_lib::Color::dark_blue);
