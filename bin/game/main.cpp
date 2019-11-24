@@ -39,7 +39,5 @@ int main()
 
     f.wait_for_button();
 
-    clear();
-
     return Graph_lib::gui_main();
 }

@@ -16,7 +16,7 @@ class Card : public Graph_lib::Rectangle
     std::string name;
 
   public:
-    Graph_lib::Button show;
+    Graph_lib::Button *show;
 
     Card(int x, int y, std::string img_name, Graph_lib::Callback cb_show);
 

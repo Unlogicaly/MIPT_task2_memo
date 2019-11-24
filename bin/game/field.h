@@ -20,6 +20,8 @@ class Field : public Simple_window
 
     std::pair<Card *, Card *> opened;
 
+    int ready = 0;
+
   public:
     Field();
 

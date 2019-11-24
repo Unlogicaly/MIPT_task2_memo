@@ -4,7 +4,8 @@ using namespace Graph_lib;
 
 Card::Card(int x, int y, std::string img_name, Graph_lib::Callback cb_show)
     : img{Point{side_gap + x * (cr_sz_x + shft), up_gap + y * (cr_sz_y + shft)}, img_name},
-      show{Point{side_gap + x * (cr_sz_x + shft), up_gap + y * (cr_sz_y + shft)}, cr_sz_x, cr_sz_y, "", cb_show},
+      show{new Graph_lib::Button(Point{side_gap + x * (cr_sz_x + shft), up_gap + y * (cr_sz_y + shft)}, cr_sz_x,
+                                 cr_sz_y, "", cb_show)},
       Rectangle{Point{side_gap + x * (cr_sz_x + shft), up_gap + y * (cr_sz_y + shft)}, cr_sz_x, cr_sz_y},
       x{x},
       y{y},
@@ -21,7 +22,8 @@ void Card::click()
 
 void Card::attach(Graph_lib::Window &win)
 {
-    win.attach(show);
+    win.attach(*show);
+    show->attach(win);
 }
 
 void Card::draw_lines() const

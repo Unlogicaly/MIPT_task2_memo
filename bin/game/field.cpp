@@ -41,12 +41,12 @@ Field::Field() : Simple_window({0, 0}, 1920, 1080, ""), opened{nullptr, nullptr}
         int i1 = pairs[i] / width, j1 = pairs[i] % width;
         cards[i1][j1] = new Card(i1, j1, get_pic(pictures[i / 2], cr_sz_x), cb_show);
         attach(*cards[i1][j1]);
-        attach(cards[i1][j1]->show);
+        attach(*cards[i1][j1]->show);
 
         int i2 = pairs[i + 1] / width, j2 = pairs[i + 1] % width;
         cards[i2][j2] = new Card(i2, j2, get_pic(pictures[i / 2], cr_sz_x), cb_show);
         attach(*cards[i2][j2]);
-        attach(cards[i2][j2]->show);
+        attach(*cards[i2][j2]->show);
     }
 }
 
@@ -57,21 +57,33 @@ void Field::flip(Graph_lib::Address pwin)
     if (!opened.first)
         opened.first = c;
     else if (!opened.second)
+    {
+        if (opened.first == c)
+            return;
         opened.second = c;
+    }
     else
     {
         if (opened.first->get_name() == opened.second->get_name())
         {
-            delete opened.first;
-            delete opened.second;
+            opened.first->show->hide();
+
+            opened.second->show->hide();
+
+            ready++;
+            if (ready == height * width / 2)
+            {
+                std::cout << "Congratulations!";
+                hide();
+            }
         }
         else
         {
             opened.first->click();
-            opened.first = nullptr;
             opened.second->click();
-            opened.second = nullptr;
         }
+        opened.first = c;
+        opened.second = nullptr;
     }
 
     c->click();

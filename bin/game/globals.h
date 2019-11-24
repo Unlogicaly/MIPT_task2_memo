@@ -14,7 +14,7 @@ const int shft = 5;
 const int side_gap = 150;
 const int up_gap = 100;
 
-const int height = 6;
-const int width = 6;
+const int height = 2;
+const int width = 2;
 
 #endif // GLOBALS_H
