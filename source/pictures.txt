@@ -9,9 +9,9 @@ orange
 fish
 scissors
 lamp
-wall
 glass
 milk
+donut
 chocolate
 shoes
 hat

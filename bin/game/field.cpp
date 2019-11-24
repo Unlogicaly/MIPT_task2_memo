@@ -21,7 +21,7 @@ std::vector<int> rand_range()
     return res;
 }
 
-Field::Field() : Simple_window({0, 0}, 1920, 1080, ""), opened{nullptr}
+Field::Field() : Simple_window({0, 0}, 1920, 1080, ""), opened{nullptr, nullptr}
 {
     std::vector<std::string> pictures;
     get_names(pictures);
@@ -54,6 +54,26 @@ void Field::flip(Graph_lib::Address pwin)
 {
     Fl_Widget &w = Graph_lib::reference_to<Fl_Widget>(pwin);
     auto c = get_card(w.x(), w.y());
+    if (!opened.first)
+        opened.first = c;
+    else if (!opened.second)
+        opened.second = c;
+    else
+    {
+        if (opened.first->get_name() == opened.second->get_name())
+        {
+            delete opened.first;
+            delete opened.second;
+        }
+        else
+        {
+            opened.first->click();
+            opened.first = nullptr;
+            opened.second->click();
+            opened.second = nullptr;
+        }
+    }
+
     c->click();
     Fl::redraw();
 }

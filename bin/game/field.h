@@ -6,24 +6,6 @@
 
 std::vector<int> get_pairs();
 
-#define ull unsigned long long
-
-template <typename T>
-std::vector<T> matrix_1d(ull length, T fill = 0)
-{
-    std::vector<T> res(length);
-    for (ull i = 0; i < length; ++i)
-        res[i] = fill;
-    return res;
-}
-
-template <typename T>
-std::vector<std::vector<T>> matrix_2d(ull height, ull width, T fill = 0)
-{
-    std::vector<std::vector<T>> res(height, matrix_1d(width, fill));
-    return res;
-}
-
 std::vector<int> rand_range();
 
 class Field : public Simple_window
@@ -36,7 +18,7 @@ class Field : public Simple_window
 
     std::vector<std::vector<Card *>> cards;
 
-    Card *opened;
+    std::pair<Card *, Card *> opened;
 
   public:
     Field();

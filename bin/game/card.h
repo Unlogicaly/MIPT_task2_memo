@@ -13,6 +13,8 @@ class Card : public Graph_lib::Rectangle
 
     bool is_clicked = false;
 
+    std::string name;
+
   public:
     Graph_lib::Button show;
 
@@ -22,6 +24,8 @@ class Card : public Graph_lib::Rectangle
 
     void attach(Graph_lib::Window &win);
     void draw_lines() const override;
+
+    std::string get_name() { return name; }
 };
 
 #endif // CARD_H
