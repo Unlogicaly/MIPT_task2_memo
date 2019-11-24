@@ -1,6 +1,7 @@
 #ifndef CARD_H
 #define CARD_H
-#include "create_window.h"
+
+#include "myWin.h"
 
 class Card : public Graph_lib::Rectangle
 {
