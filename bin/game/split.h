@@ -1,7 +1,6 @@
 #ifndef SPLIT_H
 #define SPLIT_H
 
-#include "globals.h"
 #include <iostream>
 #include <vector>
 

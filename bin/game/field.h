@@ -26,6 +26,12 @@ class Field : public Simple_window
 
     point get_point(int x, int y) { return {side_gap + (size + shift) * x, up_gap + (size + shift) * y}; }
 
+    void treat_last(Card *treat_last);
+
+    Graph_lib::Out_box messages;
+
+    void exit();
+
   public:
     Field(int height, int width, int size, int shift, int side_gap, int up_gap);
 

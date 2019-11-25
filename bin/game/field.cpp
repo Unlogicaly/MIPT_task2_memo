@@ -23,6 +23,7 @@ std::vector<int> rand_range(int max)
 
 Field::Field(int height, int width, int size, int shift, int side_gap, int up_gap)
     : Simple_window({0, 0}, 1920, 1080, ""),
+      messages({x_max() / 2 - 120, y_max() / 2 - 50}, 240, 100, ""),
       opened{nullptr, nullptr},
       height{height},
       width{width},
@@ -56,6 +57,60 @@ Field::Field(int height, int width, int size, int shift, int side_gap, int up_ga
         attach(*cards[i2][j2]);
         attach(*cards[i2][j2]->show);
     }
+
+    attach(messages);
+    messages.hide();
+}
+
+int get_local_time()
+{
+    time_t calendar = time(nullptr);
+    tm *local = std::localtime(&calendar);
+
+    if (local)
+        return local->tm_hour * 3600 + local->tm_min * 60 + local->tm_sec;
+
+    return 0;
+}
+
+void wait(int time)
+{
+    int start = get_local_time();
+    while (get_local_time() - start < time)
+        ;
+}
+
+void Field::treat_last(Card *last)
+{
+    for (auto &lines : cards)
+    {
+        for (auto *card : lines)
+        {
+            if (!card->is_found)
+                if (card != last)
+                {
+                    card->is_found = true;
+                    last->is_found = true;
+                    card->click();
+
+                    messages.put("Congratulations!");
+                    messages.show();
+
+                    Fl::redraw();
+
+                    return;
+                }
+        }
+    }
+}
+
+void Field::exit()
+{
+    wait(3);
+    messages.put("Do you want to exit?");
+    wait(2);
+
+    hide();
 }
 
 void Field::flip(Graph_lib::Address pwin)
@@ -75,25 +130,29 @@ void Field::flip(Graph_lib::Address pwin)
         if (opened.first->get_name() == opened.second->get_name())
         {
             opened.first->show->hide();
-
             opened.second->show->hide();
 
+            opened.first->is_found = true;
+            opened.second->is_found = true;
+
             ready++;
-            if (ready == height * width / 2)
-            {
-                hide();
-                std::cout << "Congratulations!";
-            }
         }
         else
         {
             opened.first->click();
             opened.second->click();
         }
+
         opened.first = c;
         opened.second = nullptr;
     }
 
     c->click();
+
     Fl::redraw();
+
+    if (ready == height * width / 2 - 1)
+    {
+        treat_last(c);
+    }
 }

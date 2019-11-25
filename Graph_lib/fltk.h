@@ -10,6 +10,7 @@
 #include <FL/Fl_Output.H>
 #include <FL/fl_draw.H>
 #include <FL/Enumerations.H>
+#include <FL/fl_ask.h>
 
 #include <FL/Fl_JPEG_Image.H>
 #include <FL/Fl_GIF_Image.H>
