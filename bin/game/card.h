@@ -13,7 +13,7 @@ class Card : public Graph_lib::Rectangle
     int y;
 
     Graph_lib::Image img;
-    Graph_lib::Image rumor;
+    Graph_lib::Image frame;
 
     bool is_clicked = false;
 
@@ -34,6 +34,8 @@ class Card : public Graph_lib::Rectangle
     std::string get_name() { return name; }
 
     bool is_found{false};
+
+    ~Card() override;
 };
 
 #endif // CARD_H

@@ -3,40 +3,55 @@
 #include <chrono>
 #include <random>
 
+template <class T>
+void print(const std::vector<T> &src, const std::string &sep = " ", const std::string &end = "\n",
+           std::ostream &os = std::cout)
+{
+    for (auto &t : src)
+    {
+        os << t << sep;
+    }
+    os << end;
+}
+
 Card *Field::get_card(int x, int y)
 {
     return cards[(x - side_gap) / (size + shift)][(y - up_gap) / (size + shift)];
 }
 
-std::vector<int> rand_range(int max)
+std::vector<int> rand_range(int max, int seed)
 {
-    srand(time(NULL));
+    if (seed == -1)
+        long long seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::vector<int> res(max);
     for (auto i = 0; i < res.size(); ++i)
     {
         res[i] = i;
     }
-    std::random_shuffle(res.begin(), res.end());
+
+    std::shuffle(res.begin(), res.end(), std::default_random_engine{seed});
 
     return res;
 }
 
-Field::Field(int height, int width, int size, int shift, int side_gap, int up_gap)
-    : Simple_window({0, 0}, 1920, 1080, ""),
+Field::Field(int size, int shift, int side_gap, int up_gap)
+    : myWin(),
       messages({x_max() / 2 - 120, y_max() / 2 - 50}, 240, 100, ""),
       opened{nullptr, nullptr},
-      height{height},
-      width{width},
       size{size},
       shift{shift},
       side_gap{side_gap},
       up_gap{up_gap}
 {
+    long long seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+    myWin::color(Graph_lib::Color::white);
+
     std::vector<std::string> pictures;
     get_names(pictures);
-    std::random_shuffle(pictures.begin(), pictures.end());
+    std::shuffle(pictures.begin(), pictures.end(), std::default_random_engine{seed});
 
-    std::vector<int> pairs = rand_range(height * width);
+    std::vector<int> pairs = rand_range(height * width, seed);
 
     for (auto i = 0; i < height; ++i)
     {
@@ -96,8 +111,6 @@ void Field::treat_last(Card *last)
                     messages.put("Congratulations!");
                     messages.show();
 
-                    Fl::redraw();
-
                     return;
                 }
         }
@@ -155,4 +168,11 @@ void Field::flip(Graph_lib::Address pwin)
     {
         treat_last(c);
     }
+}
+
+Field::~Field()
+{
+    for (auto &line : cards)
+        for (auto *card : line)
+            delete card;
 }

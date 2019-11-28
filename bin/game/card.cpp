@@ -7,7 +7,7 @@ Card::Card(int x, int y, point p, int size, std::string img_name, Graph_lib::Cal
       x{x},
       y{y},
       img{Point{p.first, p.second}, img_name},
-      rumor{Point{p.first, p.second}, get_pic("rumor", size)},
+      frame{Point{p.first, p.second}, get_pic("frame", size)},
       size{size},
       name{img_name},
       show{new Graph_lib::Button(Point{p.first, p.second}, size, size, "", cb_show)}
@@ -33,11 +33,16 @@ void Card::draw_lines() const
         img.draw();
         if (is_found)
         {
-            rumor.draw();
+            frame.draw();
         }
     }
     else
     {
         Rectangle::draw_lines();
     }
+}
+
+Card::~Card()
+{
+    delete show;
 }

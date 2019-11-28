@@ -65,7 +65,8 @@ struct Button : Widget
 {
   Button (Point xy, int w, int h, const std::string & label, Callback cb)
     : Widget{ xy, w, h, label, cb }
-  { }
+  {
+  }
 
   void attach (Window &);
 };
@@ -93,7 +94,7 @@ struct Out_box : Widget
   { }
 
   void put (int);
-  void put (const std::string &);
+  void put(const std::string&);
 
   void attach (Window & win);
 };

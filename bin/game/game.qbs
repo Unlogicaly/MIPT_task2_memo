@@ -27,6 +27,8 @@ CppApplication {
         "pictures_treatment.cpp",
         "editting_files.h",
         "editting_files.cpp",
+        "tracer.h",
+        "tracer.cpp",
     ]
 
     cpp.includePaths:  fltk_dir + "\\include"

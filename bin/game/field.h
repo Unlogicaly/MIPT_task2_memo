@@ -6,9 +6,9 @@
 
 std::vector<int> get_pairs();
 
-std::vector<int> rand_range(int max);
+std::vector<int> rand_range(int max, int seed = -1);
 
-class Field : public Simple_window
+class Field : public myWin
 {
   private:
     static void cb_show(Graph_lib::Address pwin, Graph_lib::Address pwid)
@@ -22,7 +22,7 @@ class Field : public Simple_window
 
     int ready = 0;
 
-    int height, width, size, shift, side_gap, up_gap;
+    int size, shift, side_gap, up_gap;
 
     point get_point(int x, int y) { return {side_gap + (size + shift) * x, up_gap + (size + shift) * y}; }
 
@@ -33,11 +33,13 @@ class Field : public Simple_window
     void exit();
 
   public:
-    Field(int height, int width, int size, int shift, int side_gap, int up_gap);
+    Field(int size, int shift, int side_gap, int up_gap);
 
     Card *get_card(int x, int y);
 
     void flip(Graph_lib::Address pwin);
+
+    ~Field();
 };
 
 #endif // FIELD_H

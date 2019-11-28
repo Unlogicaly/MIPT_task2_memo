@@ -15,11 +15,13 @@ void print(const std::vector<T> &src, const std::string &sep = " ", const std::s
 
 int main()
 {
-    Field f(2, 2, 150, 5, 150, 150);
+    Graph_lib::Font font(Graph_lib::Font::courier);
 
-    f.wait_for_button();
+    std::cout << font.as_int();
 
-    //    clear();
+    Field f(120, 5, 20, 20);
+
+    clear();
 
     return Graph_lib::gui_main();
 }
