@@ -13,13 +13,23 @@ void print(const std::vector<T> &src, const std::string &sep = " ", const std::s
     os << end;
 }
 
+void launch()
+{
+    bool end = false;
+    while (!end)
+    {
+        Field f(end, 120, 5, 20, 20);
+        Graph_lib::gui_main();
+    }
+}
+
 int main()
 {
     Graph_lib::Font font(Graph_lib::Font::courier);
 
     std::cout << font.as_int();
 
-    Field f(120, 5, 20, 20);
+    launch();
 
     clear();
 

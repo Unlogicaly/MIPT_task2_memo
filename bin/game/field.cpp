@@ -34,8 +34,8 @@ std::vector<int> rand_range(int max, int seed)
     return res;
 }
 
-Field::Field(int size, int shift, int side_gap, int up_gap)
-    : myWin(),
+Field::Field(bool &end, int size, int shift, int side_gap, int up_gap)
+    : myWin(end),
       messages({x_max() / 2 - 120, y_max() / 2 - 50}, 240, 100, ""),
       opened{nullptr, nullptr},
       size{size},
@@ -111,19 +111,12 @@ void Field::treat_last(Card *last)
                     messages.put("Congratulations!");
                     messages.show();
 
+                    started = false;
+
                     return;
                 }
         }
     }
-}
-
-void Field::exit()
-{
-    wait(3);
-    messages.put("Do you want to exit?");
-    wait(2);
-
-    hide();
 }
 
 void Field::flip(Graph_lib::Address pwin)

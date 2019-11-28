@@ -30,14 +30,21 @@ class Field : public myWin
 
     Graph_lib::Out_box messages;
 
-    void exit();
-
   public:
-    Field(int size, int shift, int side_gap, int up_gap);
+    Field(bool &end, int size, int shift, int side_gap, int up_gap);
 
     Card *get_card(int x, int y);
 
     void flip(Graph_lib::Address pwin);
+
+    void hide_field()
+    {
+        for (auto &line : cards)
+            for (auto card : line)
+            {
+                delete card;
+            }
+    }
 
     ~Field();
 };
