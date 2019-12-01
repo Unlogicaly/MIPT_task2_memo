@@ -12,7 +12,7 @@ void get_desktop_resolution(int &horizontal, int &vertical)
     GetWindowRect(hDesktop, &desktop);
 
     horizontal = desktop.right;
-    vertical = desktop.bottom;
+    vertical = desktop.bottom - 50;
 }
 
 template <class T>
@@ -34,6 +34,7 @@ void launch()
     bool end = false;
     while (!end)
     {
+        clear();
         Field f(end, w, h);
         Graph_lib::gui_main();
     }

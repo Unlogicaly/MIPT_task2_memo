@@ -7,7 +7,7 @@ Card::Card(int x, int y, point p, int size, std::string img_name, Graph_lib::Cal
       x{x},
       y{y},
       img{Point{p.first, p.second}, img_name},
-      frame{Point{p.first, p.second}, get_pic("frame", size)},
+      frame{Point{p.first, p.second}, get_pic("frame", size, size)},
       size{size},
       name{img_name},
       show{new Graph_lib::Button(Point{p.first, p.second}, size, size, "", cb_show)}
@@ -23,7 +23,6 @@ void Card::click()
 void Card::attach(Graph_lib::Window &win)
 {
     win.attach(*show);
-    show->attach(win);
 }
 
 void Card::draw_lines() const

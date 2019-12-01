@@ -34,10 +34,10 @@ std::vector<int> rand_range(int max, int seed)
     return res;
 }
 
-Field::Field(bool &end, int x_resol, int y_resol)
-    : myWin(end, x_resol, y_resol),
-      messages({x_max() / 2 - 120, y_max() / 2 - 50}, 240, 100, ""),
-      opened{nullptr, nullptr}
+Field::Field(bool &_end, int x_resol, int y_resol)
+    : myWin(_end, x_resol, y_resol),
+      opened{nullptr, nullptr},
+      messages({x_max() / 2 - 120, y_max() / 2 - 50}, 240, 100, "")
 {
     long long seed = std::chrono::system_clock::now().time_since_epoch().count();
 
@@ -59,12 +59,14 @@ Field::Field(bool &end, int x_resol, int y_resol)
     for (auto i = 0; i < get_height() * get_width(); i += 2)
     {
         int i1 = pairs[i] / get_width(), j1 = pairs[i] % get_width();
-        cards[i1][j1] = new Card(i1, j1, get_point(i1, j1), get_size(), get_pic(pictures[i / 2], get_size()), cb_show);
+        cards[i1][j1] =
+            new Card(i1, j1, get_point(i1, j1), get_size(), get_pic(pictures[i / 2], get_size(), get_size()), cb_show);
         attach(*cards[i1][j1]);
         attach(*cards[i1][j1]->show);
 
         int i2 = pairs[i + 1] / get_width(), j2 = pairs[i + 1] % get_width();
-        cards[i2][j2] = new Card(i2, j2, get_point(i2, j2), get_size(), get_pic(pictures[i / 2], get_size()), cb_show);
+        cards[i2][j2] =
+            new Card(i2, j2, get_point(i2, j2), get_size(), get_pic(pictures[i / 2], get_size(), get_size()), cb_show);
         attach(*cards[i2][j2]);
         attach(*cards[i2][j2]->show);
     }
@@ -151,13 +153,13 @@ void Field::flip(Graph_lib::Address pwin)
 
     c->click();
 
-    Fl::redraw();
-
     if (ready == get_height() * get_width() / 2 - 1)
     {
         treat_last(c);
         asc();
     }
+
+    Fl::redraw();
 }
 
 Field::~Field()

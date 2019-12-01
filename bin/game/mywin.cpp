@@ -15,23 +15,12 @@ modeChoose::modeChoose(myWin &win, Graph_lib::Callback cb_start)
         menu.push_back(
             new Graph_lib::Button{{x, y}, win.get_choose_mode_bs(), win.get_choose_mode_bs(), name, cb_start});
     }
-    attach(win);
-}
-
-std::pair<int, int> convert(myWin &win, int n, int m, bool reverse)
-{
-    if (!reverse)
-    {
-        return {n * win.get_choose_mode_bs() + win.x_max() / 2 - 260, m * win.get_choose_mode_bs() + 1080 / 2 - 170};
-    }
-    else
-        return {(n - win.x_max() / 2 + 260) / win.get_choose_mode_bs(),
-                (m - 1080 / 2 + 170) / win.get_choose_mode_bs()};
 }
 
 void myWin::asc()
 {
-    play_ag->show_q();
+    play_ag = new playAgain(*this, cb_exit, cb_end);
+    attach(*play_ag);
 }
 
 int calc_choose_mode_bs(int, int y_resol)
@@ -61,15 +50,19 @@ myWin::myWin(bool &end, int x_resol, int y_resol)
       yes_no_bs{calc_yes_no_bs(x_resol, y_resol)},
       end{end}
 {
+    fullscreen();
+
     exit_button = new Graph_lib::Button({x_resol - yes_no_bs, 0}, yes_no_bs, yes_no_bs, "Quit", cb_end);
 
     mode_ch = new modeChoose(*this, cb_start);
 
-    play_ag = new playAgain(*this, cb_exit, cb_end);
+    //    play_ag = new playAgain(*this, cb_exit, cb_end);
 
     color(Graph_lib::Color::white);
 
     mode_ch = new modeChoose(*this, cb_start);
+
+    attach(*mode_ch);
 
     while (!started and Fl::wait())
     {
@@ -80,21 +73,22 @@ myWin::myWin(bool &end, int x_resol, int y_resol)
     mode_ch->hide_menu();
 
     attach(*exit_button);
-    attach(*play_ag);
+    //    attach(*play_ag);
 
-    play_ag->hide_q();
+    //    play_ag->hide_q();
 
     Fl::redraw();
 }
 
 playAgain::playAgain(Graph_lib::Window &win, Graph_lib::Callback cb_again, Graph_lib::Callback cb_end)
     : win{win},
-      asc{new Graph_lib::Text({win.x_max() / 2 - 60, win.y_max() / 2 - 50}, "Play again?")},
-      yes{new Graph_lib::Button({win.x_max() / 2 - 100, win.y_max() / 2 - 50}, 100, 100, "Yes", cb_again)},
-      no{new Graph_lib::Button({win.x_max() / 2, win.y_max() / 2 - 50}, 100, 100, "No", cb_end)},
+      asc{new Graph_lib::Image({win.x_max() / 2 - 100, win.y_max() / 2 - 117}, get_pic("asc", 67, 201))},
+      yes_b{new Graph_lib::Button({win.x_max() / 2 - 100, win.y_max() / 2 - 50}, 100, 100, "Yes", cb_again)},
+      yes_im{new Graph_lib::Image({win.x_max() / 2 - 100, win.y_max() / 2 - 50}, get_pic("yes", 100, 100))},
+      no_b{new Graph_lib::Button({win.x_max() / 2, win.y_max() / 2 - 50}, 100, 100, "No", cb_end)},
+      no_im{new Graph_lib::Image({win.x_max() / 2, win.y_max() / 2 - 50}, get_pic("no", 100, 100))},
       Widget::Widget({win.x_max() / 2 - 100, win.y_max() / 2 - 66}, 200, 116, "",
                      [](Graph_lib::Address, Graph_lib::Address) {})
+
 {
-    asc->set_font(Graph_lib::Font::courier);
-    asc->set_font_size(16);
 }

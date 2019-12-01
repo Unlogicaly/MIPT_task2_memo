@@ -3,7 +3,7 @@
 
 #include "game_paths.h"
 
-std::string get_pic(const std::string &_name, int size = 128);
+std::string get_pic(const std::string &_name, int size_h = 128, int size_w = 128);
 
 int get_field_size(Simple_window &win);
 

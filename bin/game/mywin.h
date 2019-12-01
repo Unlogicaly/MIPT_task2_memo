@@ -39,9 +39,19 @@ class modeChoose : public Graph_lib::Widget
 
     void attach(Graph_lib::Window &win) override
     {
+        TRACE_FUNC;
         for (auto &button : menu)
         {
+            std::cerr << button->label << std::endl;
             win.attach(*button);
+        }
+    }
+
+    ~modeChoose() override
+    {
+        for (auto &button : menu)
+        {
+            delete button;
         }
     }
 };
@@ -49,10 +59,13 @@ class modeChoose : public Graph_lib::Widget
 class playAgain : public Graph_lib::Widget
 {
   private:
-    Graph_lib::Text *asc;
+    Graph_lib::Image *asc;
 
-    Graph_lib::Button *yes;
-    Graph_lib::Button *no;
+    Graph_lib::Button *yes_b;
+    Graph_lib::Image *yes_im;
+
+    Graph_lib::Button *no_b;
+    Graph_lib::Image *no_im;
 
     Graph_lib::Window &win;
 
@@ -63,23 +76,42 @@ class playAgain : public Graph_lib::Widget
     {
         win.attach(*asc);
 
-        win.attach(*yes);
+        win.attach(*yes_b);
+        win.attach(*yes_im);
 
-        win.attach(*no);
+        win.attach(*no_b);
+        win.attach(*no_im);
     }
 
     void hide_q()
     {
-        asc->set_label("");
-        no->hide();
-        yes->hide();
+        win.detach(*asc);
+
+        no_b->hide();
+        win.detach(*no_im);
+
+        yes_b->hide();
+        win.detach(*yes_im);
     }
 
     void show_q()
     {
-        asc->set_label("Play again?");
-        yes->show();
-        no->show();
+        win.attach(*asc);
+
+        yes_b->show();
+        win.attach(*yes_im);
+
+        no_b->show();
+        win.attach(*no_im);
+    }
+
+    ~playAgain() override
+    {
+        delete asc;
+        delete no_im;
+        delete no_b;
+        delete yes_im;
+        delete yes_b;
     }
 };
 
@@ -100,7 +132,8 @@ class myWin : public Graph_lib::Window
     {
         Fl_Widget &w = Graph_lib::reference_to<Fl_Widget>(addr);
 
-        auto [j, i] = convert(*this, w.x(), w.y(), true);
+        int j = (w.x() + choose_mode_bs * 3 / 2 - x_max() / 2) / choose_mode_bs;
+        int i = (w.y() + choose_mode_bs - y_max() / 2) / choose_mode_bs;
 
         int mode = i * 3 + j;
 
@@ -117,7 +150,7 @@ class myWin : public Graph_lib::Window
     modeChoose *mode_ch;
     playAgain *play_ag;
 
-    Field *field;
+    //    Field *field;
 
     int height, width;
 
@@ -149,6 +182,13 @@ class myWin : public Graph_lib::Window
     void set_shift(int value) { shift = value; }
     void set_side_gap(int value) { side_gap = value; }
     void set_up_gap(int value) { up_gap = value; }
+
+    ~myWin()
+    {
+        delete mode_ch;
+        delete play_ag;
+        delete exit_button;
+    }
 };
 
 #endif // MYWIN_H
