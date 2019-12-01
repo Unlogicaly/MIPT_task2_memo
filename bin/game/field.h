@@ -4,8 +4,6 @@
 #include "card.h"
 #include "editting_files.h"
 
-std::vector<int> get_pairs();
-
 std::vector<int> rand_range(int max, int seed = -1);
 
 class Field : public myWin

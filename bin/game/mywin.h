@@ -137,8 +137,8 @@ class myWin : public Graph_lib::Window
 
         int mode = i * 3 + j;
 
-        height = modes[mode].first;
-        width = modes[mode].second;
+        height = modes[mode].second;
+        width = modes[mode].first;
 
         started = true;
     }
