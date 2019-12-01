@@ -67,13 +67,19 @@ class playAgain : public Graph_lib::Widget
     Graph_lib::Button *no_b;
     Graph_lib::Image *no_im;
 
+    Graph_lib::Rectangle *back;
+
     Graph_lib::Window &win;
 
+    int _size;
+
   public:
-    playAgain(Graph_lib::Window &win, Graph_lib::Callback cb_again, Graph_lib::Callback cb_end);
+    playAgain(myWin &win, Graph_lib::Callback cb_again, Graph_lib::Callback cb_end);
 
     void attach(Graph_lib::Window &win) override
     {
+        win.attach(*back);
+
         win.attach(*asc);
 
         win.attach(*yes_b);
@@ -87,6 +93,8 @@ class playAgain : public Graph_lib::Widget
     {
         win.detach(*asc);
 
+        win.detach(*back);
+
         no_b->hide();
         win.detach(*no_im);
 
@@ -97,6 +105,8 @@ class playAgain : public Graph_lib::Widget
     void show_q()
     {
         win.attach(*asc);
+
+        win.attach(*back);
 
         yes_b->show();
         win.attach(*yes_im);
@@ -149,8 +159,6 @@ class myWin : public Graph_lib::Window
 
     modeChoose *mode_ch;
     playAgain *play_ag;
-
-    //    Field *field;
 
     int height, width;
 

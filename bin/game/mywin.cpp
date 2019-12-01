@@ -19,7 +19,7 @@ modeChoose::modeChoose(myWin &win, Graph_lib::Callback cb_start)
 
 void myWin::asc()
 {
-    play_ag = new playAgain(*this, cb_exit, cb_end);
+    //    play_ag = new playAgain(*this, cb_exit, cb_end);
     attach(*play_ag);
 }
 
@@ -56,7 +56,7 @@ myWin::myWin(bool &end, int x_resol, int y_resol)
 
     mode_ch = new modeChoose(*this, cb_start);
 
-    //    play_ag = new playAgain(*this, cb_exit, cb_end);
+    play_ag = new playAgain(*this, cb_exit, cb_end);
 
     color(Graph_lib::Color::white);
 
@@ -73,22 +73,34 @@ myWin::myWin(bool &end, int x_resol, int y_resol)
     mode_ch->hide_menu();
 
     attach(*exit_button);
-    //    attach(*play_ag);
-
-    //    play_ag->hide_q();
 
     Fl::redraw();
 }
 
-playAgain::playAgain(Graph_lib::Window &win, Graph_lib::Callback cb_again, Graph_lib::Callback cb_end)
-    : win{win},
-      asc{new Graph_lib::Image({win.x_max() / 2 - 100, win.y_max() / 2 - 117}, get_pic("asc", 67, 201))},
-      yes_b{new Graph_lib::Button({win.x_max() / 2 - 100, win.y_max() / 2 - 50}, 100, 100, "Yes", cb_again)},
-      yes_im{new Graph_lib::Image({win.x_max() / 2 - 100, win.y_max() / 2 - 50}, get_pic("yes", 100, 100))},
-      no_b{new Graph_lib::Button({win.x_max() / 2, win.y_max() / 2 - 50}, 100, 100, "No", cb_end)},
-      no_im{new Graph_lib::Image({win.x_max() / 2, win.y_max() / 2 - 50}, get_pic("no", 100, 100))},
-      Widget::Widget({win.x_max() / 2 - 100, win.y_max() / 2 - 66}, 200, 116, "",
+playAgain::playAgain(myWin &win, Graph_lib::Callback cb_again, Graph_lib::Callback cb_end)
+    : _size{win.get_choose_mode_bs()},
+      win{win},
+      asc{nullptr},
+      yes_b{nullptr},
+      yes_im{nullptr},
+      no_b{nullptr},
+      no_im{nullptr},
+      back{nullptr},
+      Widget::Widget({win.x_max() / 2 - _size, win.y_max() / 2 - _size * 7 / 6}, 2 * _size, _size * 5 / 3, "",
                      [](Graph_lib::Address, Graph_lib::Address) {})
-
 {
+    int w = win.x_max();
+    int h = win.y_max();
+
+    asc = new Graph_lib::Image({w / 2 - _size, h / 2 - _size * 7 / 6}, get_pic("asc", _size * 2 / 3, 2 * _size));
+    yes_b = new Graph_lib::Button({w / 2 - _size, h / 2 - _size / 2}, _size, _size, "", cb_again);
+    yes_im = new Graph_lib::Image({w / 2 - _size, h / 2 - _size / 2}, get_pic("yes", _size, _size));
+
+    no_b = new Graph_lib::Button({w / 2, h / 2 - _size / 2}, _size, _size, "", cb_end);
+    no_im = new Graph_lib::Image({w / 2, h / 2 - _size / 2}, get_pic("no", _size, _size));
+
+    back = new Graph_lib::Rectangle({{w / 2 - _size, h / 2 - _size * 7 / 6}, 2 * _size, _size * 5 / 3});
+
+    back->set_fill_color(Graph_lib::Color::white);
+    back->set_color(Graph_lib::Color::white);
 }

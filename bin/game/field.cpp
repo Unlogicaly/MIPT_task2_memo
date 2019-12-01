@@ -35,10 +35,7 @@ std::vector<int> rand_range(int max, int seed)
     return res;
 }
 
-Field::Field(bool &_end, int x_resol, int y_resol)
-    : myWin(_end, x_resol, y_resol),
-      opened{nullptr, nullptr},
-      messages({x_max() / 2 - 120, y_max() / 2 - 50}, 240, 100, "")
+Field::Field(bool &_end, int x_resol, int y_resol) : myWin(_end, x_resol, y_resol), opened{nullptr, nullptr}
 {
     long long seed = std::chrono::system_clock::now().time_since_epoch().count();
 
@@ -71,9 +68,6 @@ Field::Field(bool &_end, int x_resol, int y_resol)
         attach(*cards[j2][i2]);
         attach(*cards[j2][i2]->show);
     }
-
-    attach(messages);
-    messages.hide();
 }
 
 int get_local_time()
@@ -110,9 +104,6 @@ void Field::treat_last(Card *last)
                     last->show->hide();
 
                     card->click();
-
-                    messages.put("Congratulations!");
-                    messages.show();
 
                     started = false;
 
@@ -168,6 +159,7 @@ void Field::flip(Graph_lib::Address pwin)
     if (ready == get_height() * get_width() / 2 - 1)
     {
         treat_last(c);
+
         asc();
     }
 

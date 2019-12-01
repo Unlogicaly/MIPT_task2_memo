@@ -27,8 +27,6 @@ class Field : public myWin
 
     void treat_last(Card *treat_last);
 
-    Graph_lib::Out_box messages;
-
   public:
     Field(bool &end, int x_resol, int y__resol);
 
