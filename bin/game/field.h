@@ -22,16 +22,17 @@ class Field : public myWin
 
     int ready = 0;
 
-    int size, shift, side_gap, up_gap;
-
-    point get_point(int x, int y) { return {side_gap + (size + shift) * x, up_gap + (size + shift) * y}; }
+    point get_point(int x, int y)
+    {
+        return {get_side_gap() + (get_size() + get_shift()) * x, get_up_gap() + (get_size() + get_shift()) * y};
+    }
 
     void treat_last(Card *treat_last);
 
     Graph_lib::Out_box messages;
 
   public:
-    Field(bool &end, int size, int shift, int side_gap, int up_gap);
+    Field(bool &end, int x_resol, int y__resol);
 
     Card *get_card(int x, int y);
 

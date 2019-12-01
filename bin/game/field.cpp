@@ -16,7 +16,7 @@ void print(const std::vector<T> &src, const std::string &sep = " ", const std::s
 
 Card *Field::get_card(int x, int y)
 {
-    return cards[(x - side_gap) / (size + shift)][(y - up_gap) / (size + shift)];
+    return cards[(x - get_side_gap()) / (get_size() + get_shift())][(y - get_up_gap()) / (get_size() + get_shift())];
 }
 
 std::vector<int> rand_range(int max, int seed)
@@ -34,14 +34,10 @@ std::vector<int> rand_range(int max, int seed)
     return res;
 }
 
-Field::Field(bool &end, int size, int shift, int side_gap, int up_gap)
-    : myWin(end),
+Field::Field(bool &end, int x_resol, int y_resol)
+    : myWin(end, x_resol, y_resol),
       messages({x_max() / 2 - 120, y_max() / 2 - 50}, 240, 100, ""),
-      opened{nullptr, nullptr},
-      size{size},
-      shift{shift},
-      side_gap{side_gap},
-      up_gap{up_gap}
+      opened{nullptr, nullptr}
 {
     long long seed = std::chrono::system_clock::now().time_since_epoch().count();
 
@@ -51,24 +47,24 @@ Field::Field(bool &end, int size, int shift, int side_gap, int up_gap)
     get_names(pictures);
     std::shuffle(pictures.begin(), pictures.end(), std::default_random_engine{seed});
 
-    std::vector<int> pairs = rand_range(height * width, seed);
+    std::vector<int> pairs = rand_range(get_height() * get_width(), seed);
 
-    for (auto i = 0; i < height; ++i)
+    for (auto i = 0; i < get_height(); ++i)
     {
         cards.emplace_back();
-        for (auto j = 0; j < width; ++j)
+        for (auto j = 0; j < get_width(); ++j)
             cards[i].push_back(nullptr);
     }
 
-    for (auto i = 0; i < height * width; i += 2)
+    for (auto i = 0; i < get_height() * get_width(); i += 2)
     {
-        int i1 = pairs[i] / width, j1 = pairs[i] % width;
-        cards[i1][j1] = new Card(i1, j1, get_point(i1, j1), size, get_pic(pictures[i / 2], size), cb_show);
+        int i1 = pairs[i] / get_width(), j1 = pairs[i] % get_width();
+        cards[i1][j1] = new Card(i1, j1, get_point(i1, j1), get_size(), get_pic(pictures[i / 2], get_size()), cb_show);
         attach(*cards[i1][j1]);
         attach(*cards[i1][j1]->show);
 
-        int i2 = pairs[i + 1] / width, j2 = pairs[i + 1] % width;
-        cards[i2][j2] = new Card(i2, j2, get_point(i2, j2), size, get_pic(pictures[i / 2], size), cb_show);
+        int i2 = pairs[i + 1] / get_width(), j2 = pairs[i + 1] % get_width();
+        cards[i2][j2] = new Card(i2, j2, get_point(i2, j2), get_size(), get_pic(pictures[i / 2], get_size()), cb_show);
         attach(*cards[i2][j2]);
         attach(*cards[i2][j2]->show);
     }
@@ -157,9 +153,10 @@ void Field::flip(Graph_lib::Address pwin)
 
     Fl::redraw();
 
-    if (ready == height * width / 2 - 1)
+    if (ready == get_height() * get_width() / 2 - 1)
     {
         treat_last(c);
+        asc();
     }
 }
 

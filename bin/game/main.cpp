@@ -1,6 +1,19 @@
 #include "field.h"
 #include <algorithm>
 #include <chrono>
+#include <wtypes.h>
+
+void get_desktop_resolution(int &horizontal, int &vertical)
+{
+    RECT desktop;
+
+    const HWND hDesktop = GetDesktopWindow();
+
+    GetWindowRect(hDesktop, &desktop);
+
+    horizontal = desktop.right;
+    vertical = desktop.bottom;
+}
 
 template <class T>
 void print(const std::vector<T> &src, const std::string &sep = " ", const std::string &end = "\n",
@@ -15,10 +28,13 @@ void print(const std::vector<T> &src, const std::string &sep = " ", const std::s
 
 void launch()
 {
+    int w, h;
+    get_desktop_resolution(w, h);
+
     bool end = false;
     while (!end)
     {
-        Field f(end, 120, 5, 20, 20);
+        Field f(end, w, h);
         Graph_lib::gui_main();
     }
 }
@@ -26,8 +42,6 @@ void launch()
 int main()
 {
     Graph_lib::Font font(Graph_lib::Font::courier);
-
-    std::cout << font.as_int();
 
     launch();
 
