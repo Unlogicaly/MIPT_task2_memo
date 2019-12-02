@@ -34,14 +34,3 @@ string get_pic(const string &_name, int size_h, int size_w)
     }
     return final_path;
 }
-
-/**
- * @brief get_field_size: temporary function returns only one number - 128 (for 1920x1080 screens)
- * ToDo: make several functions, which will calculate appropriate field size and padding
- * @param win: current game window
- * @return size of one field (one of its dimensions)
- */
-int get_field_size(Simple_window &win)
-{
-    return 128;
-}

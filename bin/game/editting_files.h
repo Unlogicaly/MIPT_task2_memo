@@ -15,6 +15,4 @@ void clear();
 
 std::vector<std::vector<std::pair<std::string, std::string>>> get_states(const std::string &src);
 
-void cl(std::vector<std::string> &src);
-
 #endif // EDITTING_FILES_H

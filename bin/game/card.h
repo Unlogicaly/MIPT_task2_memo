@@ -8,10 +8,6 @@
 class Card : public Graph_lib::Rectangle
 {
   private:
-    // uniq number in card matrix: x & y
-    int x;
-    int y;
-
     Graph_lib::Image img;
     Graph_lib::Image frame;
 
@@ -24,7 +20,7 @@ class Card : public Graph_lib::Rectangle
   public:
     Graph_lib::Button *show;
 
-    Card(int x, int y, point p, int size, std::string img_name, Graph_lib::Callback cb_show);
+    Card(point p, int size, std::string img_name, Graph_lib::Callback cb_show);
 
     void click();
 

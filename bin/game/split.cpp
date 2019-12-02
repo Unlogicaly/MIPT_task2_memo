@@ -12,7 +12,7 @@ vector<string> split(string s, char c)
 
     int prev = -1;
 
-    for (auto i = 0; i < s.length(); ++i)
+    for (int i = 0; i < int(s.length()); ++i)
     {
         if (s[i] == c)
         {
@@ -27,37 +27,4 @@ vector<string> split(string s, char c)
     result[result.size() - 1] = string(s.begin() + prev + 1, s.end());
 
     return result;
-}
-
-bool in(const string &src, const char c)
-{
-    for (auto ch : src)
-        if (ch == c)
-            return true;
-    return false;
-}
-
-bool in(const vector<string> &names, const string &s)
-{
-    for (const auto &name : names)
-        if (name == s)
-            return true;
-    return false;
-}
-
-std::pair<std::string, int> separate(std::string s){
-    if (isalpha(s.back())) return {s, 1};
-    istringstream is{s};
-    char c;
-    string first;
-    int second;
-    is.get(c);
-    while(isalpha(c))
-    {
-        first += c;
-        is.get(c);
-    }
-    is.putback(c);
-    is >> second;
-    return {first, second};
 }

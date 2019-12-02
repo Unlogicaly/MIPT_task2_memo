@@ -46,16 +46,6 @@ bool check_file(const std::string &path)
     return is.good();
 }
 
-void cl(std::vector<string> &src)
-{
-    for (auto i = 0; i < src.size(); ++i)
-        if (src[i].empty())
-        {
-            src.erase(src.begin() + i, src.begin() + i + 1);
-            --i;
-        }
-}
-
 void get_names(std::vector<std::string> &names)
 {
     std::ifstream is(game + "source\\pictures.txt");

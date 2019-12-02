@@ -2,10 +2,8 @@
 
 using namespace Graph_lib;
 
-Card::Card(int x, int y, point p, int size, std::string img_name, Graph_lib::Callback cb_show)
+Card::Card(point p, int size, std::string img_name, Graph_lib::Callback cb_show)
     : Rectangle{Point{p.first, p.second}, size, size},
-      x{x},
-      y{y},
       img{Point{p.first, p.second}, img_name},
       frame{Point{p.first, p.second}, get_pic("frame", size, size)},
       size{size},

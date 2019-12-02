@@ -30,3 +30,11 @@ mouse
 watch
 clock
 mountain
+tree
+lizard
+moon
+pineapple
+mickey
+donald
+woody
+stewy

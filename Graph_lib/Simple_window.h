@@ -7,11 +7,9 @@ struct Simple_window : Graph_lib::Window
 {
   Simple_window (Graph_lib::Point xy, int w, int h, const std::string & title)
     : Graph_lib::Window{ xy, w, h, title },
-      next_button{ Graph_lib::Point{x_max()-70, 0}, 70, 20, "Next", cb_next },
-        exit_button({x_max() - 70, 20}, 70, 20, "Quit", cb_exit)
+      next_button{ Graph_lib::Point{x_max()-70, 0}, 70, 20, "Next", cb_next }
   {
     attach(next_button);
-    attach(exit_button);
   }
 
   void wait_for_button()
@@ -24,8 +22,6 @@ struct Simple_window : Graph_lib::Window
     Fl::redraw();
   }
 
-  Graph_lib::Button exit_button;
-
   Graph_lib::Button next_button;
 
 private:
@@ -35,13 +31,6 @@ private:
   {
     static_cast<Simple_window*>(addr)->next();
   }
-
-  static void cb_exit(Graph_lib::Address, Graph_lib::Address addr)
-  {
-      static_cast<Simple_window*>(addr)->exit();
-  }
-
-  void exit() { hide(); }
   void next() { button_pushed = true; }
 
 };

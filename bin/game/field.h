@@ -2,9 +2,8 @@
 #define FIELD_H
 
 #include "card.h"
-#include "editting_files.h"
 
-std::vector<int> rand_range(int max, int seed = -1);
+#define ull unsigned long long
 
 class Field : public myWin
 {
@@ -20,7 +19,7 @@ class Field : public myWin
 
     int ready = 0;
 
-    point get_point(int x, int y)
+    point get_point(int x, int y) const
     {
         return {get_side_gap() + (get_size() + get_shift()) * x, get_up_gap() + (get_size() + get_shift()) * y};
     }
@@ -28,20 +27,11 @@ class Field : public myWin
     void treat_last(Card *treat_last);
 
   public:
-    Field(bool &end, int x_resol, int y__resol);
+    Field(bool &end, int x_resol, int y_resol);
 
     Card *get_card(int x, int y);
 
     void flip(Graph_lib::Address pwin);
-
-    void hide_field()
-    {
-        for (auto &line : cards)
-            for (auto card : line)
-            {
-                delete card;
-            }
-    }
 
     ~Field();
 };

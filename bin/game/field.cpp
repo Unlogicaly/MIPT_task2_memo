@@ -3,36 +3,25 @@
 #include <chrono>
 #include <random>
 
-template <class T>
-void print(const std::vector<T> &src, const std::string &sep = " ", const std::string &end = "\n",
-           std::ostream &os = std::cout)
+// Generate shuffled range from 0 to max
+std::vector<int> rand_range(int max, long long seed = 0)
 {
-    for (auto &t : src)
-    {
-        os << t << sep;
-    }
-    os << end;
-}
-
-Card *Field::get_card(int x, int y)
-{
-    return cards[(x - get_side_gap()) / (get_size() + get_shift())][(y - get_up_gap()) / (get_size() + get_shift())];
-}
-
-std::vector<int> rand_range(int max, int seed)
-{
-
-    if (seed == -1)
-        long long seed = std::chrono::system_clock::now().time_since_epoch().count();
+    if (seed == 0)
+        seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::vector<int> res(max);
-    for (auto i = 0; i < res.size(); ++i)
+    for (decltype(res.size()) i = 0; i < res.size(); ++i)
     {
-        res[i] = i;
+        res[i] = static_cast<int>(i);
     }
 
     std::shuffle(res.begin(), res.end(), std::default_random_engine{seed});
 
     return res;
+}
+
+Card *Field::get_card(int x, int y)
+{
+    return cards[(x - get_side_gap()) / (get_size() + get_shift())][(y - get_up_gap()) / (get_size() + get_shift())];
 }
 
 Field::Field(bool &_end, int x_resol, int y_resol) : myWin(_end, x_resol, y_resol), opened{nullptr, nullptr}
@@ -58,34 +47,16 @@ Field::Field(bool &_end, int x_resol, int y_resol) : myWin(_end, x_resol, y_reso
     {
         int i1 = pairs[i] / get_width(), j1 = pairs[i] % get_width();
         cards[j1][i1] =
-            new Card(j1, i1, get_point(j1, i1), get_size(), get_pic(pictures[i / 2], get_size(), get_size()), cb_show);
+            new Card(get_point(j1, i1), get_size(), get_pic(pictures[i / 2], get_size(), get_size()), cb_show);
         attach(*cards[j1][i1]);
         attach(*cards[j1][i1]->show);
 
         int i2 = pairs[i + 1] / get_width(), j2 = pairs[i + 1] % get_width();
         cards[j2][i2] =
-            new Card(j2, i2, get_point(j2, i2), get_size(), get_pic(pictures[i / 2], get_size(), get_size()), cb_show);
+            new Card(get_point(j2, i2), get_size(), get_pic(pictures[i / 2], get_size(), get_size()), cb_show);
         attach(*cards[j2][i2]);
         attach(*cards[j2][i2]->show);
     }
-}
-
-int get_local_time()
-{
-    time_t calendar = time(nullptr);
-    tm *local = std::localtime(&calendar);
-
-    if (local)
-        return local->tm_hour * 3600 + local->tm_min * 60 + local->tm_sec;
-
-    return 0;
-}
-
-void wait(int time)
-{
-    int start = get_local_time();
-    while (get_local_time() - start < time)
-        ;
 }
 
 void Field::treat_last(Card *last)
@@ -94,21 +65,20 @@ void Field::treat_last(Card *last)
     {
         for (auto *card : lines)
         {
-            if (!card->is_found)
-                if (card != last)
-                {
-                    card->is_found = true;
-                    last->is_found = true;
+            if (!card->is_found and card != last)
+            {
+                card->is_found = true;
+                last->is_found = true;
 
-                    card->show->hide();
-                    last->show->hide();
+                card->show->hide();
+                last->show->hide();
 
-                    card->click();
+                card->click();
 
-                    started = false;
+                started = false;
 
-                    return;
-                }
+                return;
+            }
         }
     }
 }
@@ -159,7 +129,6 @@ void Field::flip(Graph_lib::Address pwin)
     if (ready == get_height() * get_width() / 2 - 1)
     {
         treat_last(c);
-
         asc();
     }
 
